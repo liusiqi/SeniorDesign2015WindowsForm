@@ -1,0 +1,12 @@
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\bin\Debug\SenDes0.exe.config
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\bin\Debug\SenDes0.exe
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\bin\Debug\SenDes0.pdb
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.csprojResolveAssemblyReference.cache
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.HomePage.resources
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.Properties.Resources.resources
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.TestPage.resources
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.csproj.GenerateResource.Cache
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.exe
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.pdb
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.ReportPage.resources
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.Timer.resources
