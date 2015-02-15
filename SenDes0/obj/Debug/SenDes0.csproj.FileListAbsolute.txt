@@ -10,3 +10,4 @@ c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug
 c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.pdb
 c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.ReportPage.resources
 c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.Timer.resources
+c:\users\bigrp17\documents\visual studio 2013\Projects\SenDes0\SenDes0\obj\Debug\SenDes0.ACTION.resources

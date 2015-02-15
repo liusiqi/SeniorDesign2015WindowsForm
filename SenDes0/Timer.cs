@@ -14,18 +14,15 @@ namespace SenDes0
     {
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         Label label = new Label();
-        private int countDown = 10;
+        static int countDown = 4;
 
         public Timer()
         {
             InitializeComponent();
-            //timer.Tick += new EventHandler(timer1_Tick); // Everytime timer ticks, timer_Tick will be called
-            //timer.Interval = (1000) * (1);              // Timer will tick evert second
-            //timer.Enabled = true;                       // Enable the timer
-            //timer.Start();                              // Start the timer
 
             label.Location = new Point(100, 100);
             label.AutoSize = true;
+            label.Font = new Font("Time New Roman", 24, FontStyle.Bold);
             label.Text = String.Empty;
 
             this.Controls.Add(label);
@@ -36,11 +33,14 @@ namespace SenDes0
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //label.Text = DateTime.Now.ToString();
             countDown--;
-            if (countDown < 1)
+            if (countDown == 0)
             {
-                countDown = 10;
+                this.Hide();
+                ACTION action = new ACTION();
+                action.ShowDialog();
+                this.Close();
+                timer.Stop();
             }
             label.Text = countDown.ToString();
         }

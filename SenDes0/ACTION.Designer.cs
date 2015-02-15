@@ -1,6 +1,6 @@
 ﻿namespace SenDes0
 {
-    partial class Timer
+    partial class ACTION
     {
         /// <summary>
         /// Required designer variable.
@@ -28,27 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.READY = new System.Windows.Forms.Label();
+            this.GO = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // READY
+            // GO
             // 
-            this.READY.AutoSize = true;
-            this.READY.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.READY.Location = new System.Drawing.Point(91, 36);
-            this.READY.Name = "READY";
-            this.READY.Size = new System.Drawing.Size(111, 31);
-            this.READY.TabIndex = 0;
-            this.READY.Text = "READY";
+            this.GO.AutoSize = true;
+            this.GO.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GO.Location = new System.Drawing.Point(108, 32);
+            this.GO.Name = "GO";
+            this.GO.Size = new System.Drawing.Size(60, 32);
+            this.GO.TabIndex = 0;
+            this.GO.Text = "GO";
             // 
-            // Timer
+            // ACTION
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 267);
-            this.Controls.Add(this.READY);
-            this.Name = "Timer";
-            this.Text = "Timer";
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.GO);
+            this.Name = "ACTION";
+            this.Text = "ACTION";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -56,7 +56,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label READY;
-
+        private System.Windows.Forms.Label GO;
     }
 }
