@@ -14,7 +14,7 @@ namespace SenDes0
     {
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         Label label = new Label();
-        static int countDown = 4;
+        private int countDown = 4;
 
         public Timer()
         {
@@ -36,11 +36,11 @@ namespace SenDes0
             countDown--;
             if (countDown == 0)
             {
+                timer.Stop();
                 this.Hide();
                 ACTION action = new ACTION();
                 action.ShowDialog();
                 this.Close();
-                timer.Stop();
             }
             label.Text = countDown.ToString();
         }

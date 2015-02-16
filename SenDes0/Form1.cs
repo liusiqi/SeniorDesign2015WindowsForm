@@ -21,7 +21,6 @@ namespace SenDes0
         {
             this.Hide();
             TestPage TESTPAGE = new TestPage();
-            //TESTPAGE.FormClosed += (sender, args) => this.Close();
             TESTPAGE.ShowDialog();
             this.Close();
         }

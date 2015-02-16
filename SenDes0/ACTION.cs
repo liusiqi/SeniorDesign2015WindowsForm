@@ -18,19 +18,23 @@ namespace SenDes0
         System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         Label label = new Label();
         Label indata = new Label();
-        static int countDown = 10;
-        static string file_name = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\test.txt";
+        private int countDown = 1000;
+        static string outfile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\test.txt";
+        static string infile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS in y direction.csv";
         //StreamWriter file = new StreamWriter(file_name);
         //string data_rx; // = myport.ReadLine();
 
-        static FileStream fs = new FileStream(file_name, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-        static StreamWriter sw = new StreamWriter(fs);
+        //static FileStream fs = new FileStream(outfile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+        //StreamWriter sw = new StreamWriter(fs);
+        StreamReader sr = new StreamReader(infile);
+        string[] testarray = new string[1000];
+
         public ACTION()
         {
             InitializeComponent();
-            myport.BaudRate = 9600;
-            myport.PortName = "COM6";
-            myport.Open();
+            //myport.BaudRate = 9600;
+            //myport.PortName = "COM6";
+            //myport.Open();
 
             //string data_rx = myport.ReadLine();
             //file.WriteLine(data_rx);
@@ -47,7 +51,7 @@ namespace SenDes0
 
             this.Controls.Add(label);
             timer.Tick += new EventHandler(timer_Tick);
-            timer.Interval = 1000;
+            timer.Interval = 1;
             timer.Start();
         }
 
@@ -57,18 +61,22 @@ namespace SenDes0
             countDown--;
             if (countDown == 0)
             {
+                //sw.Close();
+                //fs.Close();
+                sr.Close();
+                timer.Stop();
                 this.Hide();
                 HomePage backhome = new HomePage();
-                backhome.ShowDialog();
+                backhome.ShowDialog(); 
                 this.Close();
-                timer.Stop();
-                sw.Close();
-                fs.Close();
             }
-            label.Text = countDown.ToString();
-            string data_rx = myport.ReadLine();
-            sw.WriteLine(data_rx);
-            sw.Flush();
+           
+            //string data_rx = myport.ReadLine();
+            string data_rx = sr.ReadLine();
+            //sw.WriteLine(data_rx);
+            //sw.Flush();
+            testarray[1000 - countDown] = data_rx;
+            label.Text = testarray[1000-countDown];
         }
     }
 }

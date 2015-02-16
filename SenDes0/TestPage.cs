@@ -27,7 +27,6 @@ namespace SenDes0
         {
             this.Hide();
             HomePage HOMEPAGE = new HomePage();
-            //TESTPAGE.FormClosed += (sender, args) => this.Close();
             HOMEPAGE.ShowDialog();
             this.Close();
         }
