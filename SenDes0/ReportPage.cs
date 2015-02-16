@@ -12,8 +12,10 @@ namespace SenDes0
 {
     public partial class ReportPage : Form
     {
-        public ReportPage()
+        string test_report;
+        public ReportPage(string in_test_report)
         {
+            test_report = in_test_report;
             InitializeComponent();
         }
 

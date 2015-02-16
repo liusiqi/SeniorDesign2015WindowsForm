@@ -19,7 +19,7 @@ namespace SenDes0
         Label label = new Label();
         Label indata = new Label();
         private int countDown = 1000;
-        static string outfile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\test.txt";
+        //static string outfile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\test.txt";
         static string infile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS in y direction.csv";
         //StreamWriter file = new StreamWriter(file_name);
         //string data_rx; // = myport.ReadLine();
@@ -27,11 +27,51 @@ namespace SenDes0
         //static FileStream fs = new FileStream(outfile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
         //StreamWriter sw = new StreamWriter(fs);
         StreamReader sr = new StreamReader(infile);
-        string[] testarray = new string[1000];
+        string[] RLSarray = new string[1000];
+        string[] RUNarray = new string[1000];
+        string[] RESTarray = new string[1000];
+        string[] WALKarray = new string[1000];
+        string[] DRIVEarray = new string[1000];
 
-        public ACTION()
+        double[] RLSx = new double[256];
+        double[] RLSy = new double[256];
+        double[] RLSz = new double[256];
+        double[] RUNx = new double[256];
+        double[] RUNy = new double[256];
+        double[] RUNz = new double[256];
+        double[] RESTx = new double[256];
+        double[] RESTy = new double[256];
+        double[] RESTz = new double[256];
+        double[] WALKx = new double[256];
+        double[] WALKy = new double[256];
+        double[] WALKz = new double[256];
+        double[] DRIVEx = new double[256];
+        double[] DRIVEy = new double[256];
+        double[] DRIVEz = new double[256];
+
+        string test_report;
+        string flags;
+
+        public ACTION(string in_test_report, string inflag, double[] iRLSx, double[] iRLSy, double[] iRLSz, double[] iRUNx, double[] iRUNy, double[] iRUNz, double[] iRESTx, double[] iRESTy, double[] iRESTz, double[] iWALKx, double[] iWALKy, double[] iWALKz, double[] iDRIVEx, double[] iDRIVEy, double[] iDRIVEz)
         {
             InitializeComponent();
+            flags = inflag;
+            test_report = in_test_report;
+            RLSx = iRLSx;
+            RLSy = iRLSy;
+            RLSz = iRLSz; ;
+            RUNx = iRUNx;
+            RUNy = iRUNy;
+            RUNz = iRUNz;
+            RESTx = iRESTx;
+            RESTy = iRESTy;
+            RESTz = iRESTz;
+            WALKx = iWALKx;
+            WALKy = iWALKy;
+            WALKz = iWALKz;
+            DRIVEx = iDRIVEx;
+            DRIVEy = iDRIVEy;
+            DRIVEz = iDRIVEz;
             //myport.BaudRate = 9600;
             //myport.PortName = "COM6";
             //myport.Open();
@@ -53,6 +93,9 @@ namespace SenDes0
             timer.Tick += new EventHandler(timer_Tick);
             timer.Interval = 1;
             timer.Start();
+
+            DFT();
+
         }
 
         private void timer_Tick(object sender, EventArgs e)
@@ -75,8 +118,191 @@ namespace SenDes0
             string data_rx = sr.ReadLine();
             //sw.WriteLine(data_rx);
             //sw.Flush();
-            testarray[1000 - countDown] = data_rx;
-            label.Text = testarray[1000-countDown];
+            label.Text = RLSarray[1000 - countDown];
+            if (test_report == "test" && flags == "RLS")
+                RLSarray[1000 - countDown] = data_rx;
+            else if (test_report == "test" && flags == "RUN")
+                RUNarray[1000 - countDown] = data_rx;
+            else if (test_report == "test" && flags == "REST")
+                RESTarray[1000 - countDown] = data_rx;
+            else if (test_report == "test" && flags == "WALK")
+                WALKarray[1000 - countDown] = data_rx;
+            else if (test_report == "test" && flags == "DRIVE")
+                DRIVEarray[1000 - countDown] = data_rx;
+        }
+
+        private void DFT()
+        {
+            if (test_report == "test" && flags == "RLS")
+            {
+                for (int k = 0; k < 256; k++)
+                {
+                    double xfreal = 0;
+                    double xfimag = 0;
+                    double xfmag = 0;
+                    double yfreal = 0;
+                    double yfimag = 0;
+                    double yfmag = 0;
+                    double zfreal = 0;
+                    double zfimag = 0;
+                    double zfmag = 0;
+                    for (int n = 0; n < 256; n++)
+                    {
+                        string[] xyz = RLSarray[400 + n].Split(',');
+                        double x = Convert.ToDouble(xyz[0]);
+                        double y = Convert.ToDouble(xyz[1]);
+                        double z = Convert.ToDouble(xyz[2]);
+                        xfreal = xfreal + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        xfimag = xfimag + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfreal = yfreal + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfimag = yfimag + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfreal = zfreal + z * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfimag = zfimag + z * Math.Cos(2 * Math.PI * n * k / 256);
+                    }
+                    xfmag = Math.Sqrt(xfreal * xfreal + xfimag * xfimag);
+                    RLSx[k] = xfmag;
+                    yfmag = Math.Sqrt(yfreal * yfreal + yfimag * yfimag);
+                    RLSy[k] = yfmag;
+                    zfmag = Math.Sqrt(zfreal * zfreal + zfimag * zfimag);
+                    RLSz[k] = zfmag;
+                }
+            }
+            else if (test_report == "test" && flags == "RUN")
+            {
+                for (int k = 0; k < 256; k++)
+                {
+                    double xfreal = 0;
+                    double xfimag = 0;
+                    double xfmag = 0;
+                    double yfreal = 0;
+                    double yfimag = 0;
+                    double yfmag = 0;
+                    double zfreal = 0;
+                    double zfimag = 0;
+                    double zfmag = 0;
+                    for (int n = 0; n < 256; n++)
+                    {
+                        string[] xyz = RUNarray[400 + n].Split(',');
+                        double x = Convert.ToDouble(xyz[0]);
+                        double y = Convert.ToDouble(xyz[1]);
+                        double z = Convert.ToDouble(xyz[2]);
+                        xfreal = xfreal + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        xfimag = xfimag + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfreal = yfreal + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfimag = yfimag + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfreal = zfreal + z * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfimag = zfimag + z * Math.Cos(2 * Math.PI * n * k / 256);
+                    }
+                    xfmag = Math.Sqrt(xfreal * xfreal + xfimag * xfimag);
+                    RUNx[k] = xfmag;
+                    yfmag = Math.Sqrt(yfreal * yfreal + yfimag * yfimag);
+                    RUNy[k] = yfmag;
+                    zfmag = Math.Sqrt(zfreal * zfreal + zfimag * zfimag);
+                    RUNz[k] = zfmag;
+                }
+            }
+            else if (test_report == "test" && flags == "REST")
+            {
+                for (int k = 0; k < 256; k++)
+                {
+                    double xfreal = 0;
+                    double xfimag = 0;
+                    double xfmag = 0;
+                    double yfreal = 0;
+                    double yfimag = 0;
+                    double yfmag = 0;
+                    double zfreal = 0;
+                    double zfimag = 0;
+                    double zfmag = 0;
+                    for (int n = 0; n < 256; n++)
+                    {
+                        string[] xyz = RESTarray[400 + n].Split(',');
+                        double x = Convert.ToDouble(xyz[0]);
+                        double y = Convert.ToDouble(xyz[1]);
+                        double z = Convert.ToDouble(xyz[2]);
+                        xfreal = xfreal + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        xfimag = xfimag + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfreal = yfreal + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfimag = yfimag + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfreal = zfreal + z * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfimag = zfimag + z * Math.Cos(2 * Math.PI * n * k / 256);
+                    }
+                    xfmag = Math.Sqrt(xfreal * xfreal + xfimag * xfimag);
+                    RESTx[k] = xfmag;
+                    yfmag = Math.Sqrt(yfreal * yfreal + yfimag * yfimag);
+                    RESTy[k] = yfmag;
+                    zfmag = Math.Sqrt(zfreal * zfreal + zfimag * zfimag);
+                    RESTz[k] = zfmag;
+                }
+            }
+            else if (test_report == "test" && flags == "WALK")
+            {
+                for (int k = 0; k < 256; k++)
+                {
+                    double xfreal = 0;
+                    double xfimag = 0;
+                    double xfmag = 0;
+                    double yfreal = 0;
+                    double yfimag = 0;
+                    double yfmag = 0;
+                    double zfreal = 0;
+                    double zfimag = 0;
+                    double zfmag = 0;
+                    for (int n = 0; n < 256; n++)
+                    {
+                        string[] xyz = WALKarray[400 + n].Split(',');
+                        double x = Convert.ToDouble(xyz[0]);
+                        double y = Convert.ToDouble(xyz[1]);
+                        double z = Convert.ToDouble(xyz[2]);
+                        xfreal = xfreal + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        xfimag = xfimag + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfreal = yfreal + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfimag = yfimag + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfreal = zfreal + z * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfimag = zfimag + z * Math.Cos(2 * Math.PI * n * k / 256);
+                    }
+                    xfmag = Math.Sqrt(xfreal * xfreal + xfimag * xfimag);
+                    WALKx[k] = xfmag;
+                    yfmag = Math.Sqrt(yfreal * yfreal + yfimag * yfimag);
+                    WALKy[k] = yfmag;
+                    zfmag = Math.Sqrt(zfreal * zfreal + zfimag * zfimag);
+                    WALKz[k] = zfmag;
+                }
+            }
+            else if (test_report == "test" && flags == "DRIVE")
+            {
+                for (int k = 0; k < 256; k++)
+                {
+                    double xfreal = 0;
+                    double xfimag = 0;
+                    double xfmag = 0;
+                    double yfreal = 0;
+                    double yfimag = 0;
+                    double yfmag = 0;
+                    double zfreal = 0;
+                    double zfimag = 0;
+                    double zfmag = 0;
+                    for (int n = 0; n < 256; n++)
+                    {
+                        string[] xyz = DRIVEarray[400 + n].Split(',');
+                        double x = Convert.ToDouble(xyz[0]);
+                        double y = Convert.ToDouble(xyz[1]);
+                        double z = Convert.ToDouble(xyz[2]);
+                        xfreal = xfreal + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        xfimag = xfimag + x * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfreal = yfreal + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        yfimag = yfimag + y * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfreal = zfreal + z * Math.Cos(2 * Math.PI * n * k / 256);
+                        zfimag = zfimag + z * Math.Cos(2 * Math.PI * n * k / 256);
+                    }
+                    xfmag = Math.Sqrt(xfreal * xfreal + xfimag * xfimag);
+                    DRIVEx[k] = xfmag;
+                    yfmag = Math.Sqrt(yfreal * yfreal + yfimag * yfimag);
+                    DRIVEy[k] = yfmag;
+                    zfmag = Math.Sqrt(zfreal * zfreal + zfimag * zfimag);
+                    DRIVEz[k] = zfmag;
+                }
+            }
         }
     }
 }
