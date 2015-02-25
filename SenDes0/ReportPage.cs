@@ -15,6 +15,7 @@ namespace SenDes0
     public partial class ReportPage : Form
     {
         string test_report;
+        int start_flag = 0;
 
         List<KeyValuePair<int, double>> RLSx_Peak;
         List<KeyValuePair<int, double>> RLSy_Peak;
@@ -30,7 +31,9 @@ namespace SenDes0
         double[] COMPz = new double[256];
 
         static string infile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS in y direction.csv";
+        static string outfile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS REPORT.csv";
         StreamReader sr = new StreamReader(infile);
+        StreamWriter sw = new StreamWriter(outfile);
         SerialPort myport = new SerialPort();
 
         bool xd = false;
@@ -65,6 +68,8 @@ namespace SenDes0
 
         private void Start_Comp_Click(object sender, EventArgs e)
         {
+            this.Stop_Comp.Visible = true;
+            this.Start_Comp.Visible = false;
             xd = false;
             yd = false;
             zd = false;
@@ -85,6 +90,9 @@ namespace SenDes0
                 //timer.Stop(); // Not sure if it needs to be stop yet
                 DFT(RLSx_Peak, RLSy_Peak, RLSz_Peak);
                 countDown = 1000;
+                xd = false;
+                yd = false;
+                zd = false;
             }
             //string data_rx = myport.ReadLine();
             string data_rx = sr.ReadLine();
@@ -162,8 +170,42 @@ namespace SenDes0
 
             if (xd == true && yd == true && zd == true)
             {
-                MessageBox.Show("WARNING, the patient is in RLS situation.");
+                //start_flag++;
+                //MessageBox.Show("WARNING, the patient is in RLS situation.");
+                this.Lable_Waming.Text = "WARNING, the user is under RLS condition!";
+                this.Lable_Waming.Visible = true;
+
+                if (start_flag == 0)
+                {
+                    DateTime current_time = DateTime.Now;
+                    sw.WriteLine("ON " + current_time.ToString() + " : the user starts doing RLS movement.");
+                    start_flag++;
+                }
             }
+            if (xd == false && yd == false && zd == false)
+            {
+                this.Lable_Waming.Visible = false;
+                this.Lable_Waming.Text = "";
+                if (start_flag > 0)
+                {
+                    DateTime current_time = DateTime.Now;
+                    sw.WriteLine("OFF " + current_time.ToString() + " : the user ends doing RLS movement.");
+                    start_flag = 0;
+                }
+                if (start_flag > Int32.MaxValue)
+                    start_flag = 0;
+            }
+        }
+
+        private void Stop_Comp_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+            sw.Close();
+        }
+
+        private void Lable_Warming_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
