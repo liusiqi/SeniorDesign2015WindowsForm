@@ -63,6 +63,7 @@ namespace SenDes0
             label.Location = new Point(100, 100);
             label.AutoSize = true;
             label.Font = new Font("Time New Roman", 24, FontStyle.Bold);
+            label.ForeColor = System.Drawing.Color.GhostWhite;
             label.Text = String.Empty;
 
             this.Controls.Add(label);
