@@ -42,10 +42,9 @@
             this.TEST_BUTTON.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
             this.TEST_BUTTON.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.TEST_BUTTON.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.TEST_BUTTON.Location = new System.Drawing.Point(27, 460);
-            this.TEST_BUTTON.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TEST_BUTTON.Location = new System.Drawing.Point(12, 454);
             this.TEST_BUTTON.Name = "TEST_BUTTON";
-            this.TEST_BUTTON.Size = new System.Drawing.Size(187, 68);
+            this.TEST_BUTTON.Size = new System.Drawing.Size(140, 55);
             this.TEST_BUTTON.TabIndex = 0;
             this.TEST_BUTTON.UseVisualStyleBackColor = false;
             this.TEST_BUTTON.Click += new System.EventHandler(this.TEST_BUTTON_Click);
@@ -55,26 +54,24 @@
             this.REPORTS_BUTTON.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("REPORTS_BUTTON.BackgroundImage")));
             this.REPORTS_BUTTON.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.REPORTS_BUTTON.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.REPORTS_BUTTON.Location = new System.Drawing.Point(200, 451);
-            this.REPORTS_BUTTON.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.REPORTS_BUTTON.Location = new System.Drawing.Point(158, 454);
             this.REPORTS_BUTTON.Name = "REPORTS_BUTTON";
-            this.REPORTS_BUTTON.Size = new System.Drawing.Size(167, 68);
+            this.REPORTS_BUTTON.Size = new System.Drawing.Size(125, 80);
             this.REPORTS_BUTTON.TabIndex = 1;
             this.REPORTS_BUTTON.UseVisualStyleBackColor = true;
             this.REPORTS_BUTTON.Click += new System.EventHandler(this.REPORTS_BUTTON_Click);
             // 
             // HomePage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(393, 553);
+            this.ClientSize = new System.Drawing.Size(295, 521);
             this.Controls.Add(this.REPORTS_BUTTON);
             this.Controls.Add(this.TEST_BUTTON);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "HomePage";
             this.Text = "HomePage";
             this.ResumeLayout(false);

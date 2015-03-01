@@ -17,22 +17,23 @@ namespace SenDes0
         string test_report;
         int start_flag = 0;
 
+        bool start_stop = true;
+
         List<KeyValuePair<int, double>> RLSx_Peak;
         List<KeyValuePair<int, double>> RLSy_Peak;
         List<KeyValuePair<int, double>> RLSz_Peak;
 
-        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        private int countDown = 1000;
+        private int countDown = 256;
 
-        string[] COMParray = new string[1000];
+        string[] COMParray = new string[256];
 
         double[] COMPx = new double[256];
         double[] COMPy = new double[256];
         double[] COMPz = new double[256];
 
-        static string infile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS in y direction.csv";
+        //static string infile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS in y direction.csv";
         static string outfile = @"C:\Users\bigrp17\Documents\Visual Studio 2013\Projects\SenDes0\RLS REPORT.csv";
-        StreamReader sr = new StreamReader(infile);
+        //StreamReader sr = new StreamReader(infile);
         StreamWriter sw = new StreamWriter(outfile);
         SerialPort myport = new SerialPort();
 
@@ -48,9 +49,9 @@ namespace SenDes0
             RLSy_Peak = iRLSy_Peak;
             RLSz_Peak = iRLSz_Peak;
 
-            //myport.BaudRate = 9600;
-            //myport.PortName = "COM6";
-            //myport.Open();
+            myport.BaudRate = 9600;
+            myport.PortName = "COM6";
+            myport.Open();
 
             //string data_rx = myport.ReadLine();
             //file.WriteLine(data_rx);
@@ -68,38 +69,32 @@ namespace SenDes0
 
         private void Start_Comp_Click(object sender, EventArgs e)
         {
+            start_stop = true;
             this.Stop_Comp.Visible = true;
             this.Start_Comp.Visible = false;
             xd = false;
             yd = false;
             zd = false;
-            timer.Tick += new EventHandler(timer_Tick);
-            timer.Interval = 1;
-            timer.Start();
+            while(start_stop == true)
+                Tickfunc();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void Tickfunc()
         {
-            //string data_rx = myport.ReadLine();
             countDown--;
             if (countDown == 0)
             {
-                //sw.Close();
-                //fs.Close();
-                sr.Close();
-                //timer.Stop(); // Not sure if it needs to be stop yet
                 DFT(RLSx_Peak, RLSy_Peak, RLSz_Peak);
-                countDown = 1000;
+                countDown = 256;
                 xd = false;
                 yd = false;
                 zd = false;
             }
-            //string data_rx = myport.ReadLine();
-            string data_rx = sr.ReadLine();
+            string data_rx = myport.ReadLine();
             //sw.WriteLine(data_rx);
             //sw.Flush();
             //label.Text = RLSarray[1000 - countDown];
-            COMParray[1000 - countDown] = data_rx;
+            COMParray[256 - countDown] = data_rx;
         }
 
         private void DFT(List<KeyValuePair<int, double>> iRLSx_Peak, List<KeyValuePair<int, double>> iRLSy_Peak, List<KeyValuePair<int, double>> iRLSz_Peak)
@@ -117,7 +112,7 @@ namespace SenDes0
                 double zfmag = 0;
                 for (int n = 0; n < 256; n++)
                 {
-                    string[] xyz = COMParray[400 + n].Split(',');
+                    string[] xyz = COMParray[n].Split(',');
                     double x = Convert.ToDouble(xyz[0]);
                     double y = Convert.ToDouble(xyz[1]);
                     double z = Convert.ToDouble(xyz[2]);
@@ -199,7 +194,7 @@ namespace SenDes0
 
         private void Stop_Comp_Click(object sender, EventArgs e)
         {
-            timer.Stop();
+            start_stop = false;
             sw.Close();
         }
 
